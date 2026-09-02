@@ -64,3 +64,54 @@ Európske spoločenstvo a Úrad vlády SR.
   
 **Mediálni partneri**  
 ![](https://web.archive.org/web/20060709091314im_/http://www.stratenyveurope.sk/images/loga/stv.gif)  ![](https://web.archive.org/web/20060709091314im_/http://www.stratenyveurope.sk/images/loga/rfm.gif)  ![](https://web.archive.org/web/20060709091314im_/http://www.stratenyveurope.sk/images/loga/rs.gif)
+
+# Inštalácia hry
+
+ ### 1. Najprv si stiahnite a nainštalujte oficiálnu CD verziu hry (v1.0):
+ - Z webového archívu (ODPORÚČANÉ)
+   - cez stránku https://archive.org/details/strateny-veurope
+   - priamo CD image vo formáte ISO: [StratenyVEurope.iso](https://archive.org/download/strateny-veurope/StratenyVEurope.iso)
+   - priamo inštalačný EXE súbor: [lieu_setup.exe](https://archive.org/download/strateny-veurope/StratenyVEurope.iso/lieu_setup.exe)
+
+ - Zo súborov na stiahnutie: [lieu_setup_v1.0.exe](https://github.com/Georgo42/LostInEU/releases/download/v1.0/lieu_setup_v1.0.exe)
+
+ ### 2.  V prípade záujmu o v1.1 verziu je potrebné nainštalovať aj update patch:
+ - Z archívu oficiálnej stránky (ODPORÚČANÉ): [lieu_patch11.exe](https://web.archive.org/web/20060721134251/http://www.stratenyveurope.sk:80/media/iso/lieu_patch11.exe)
+ -  Zo súborov na stiahnutie: [lieu_patch_v1.1.exe](https://github.com/Georgo42/LostInEU/releases/download/v1.0/lieu_patch_v1.1.exe)
+
+### 3. Aplikovanie video fixu
+
+Ak by ste sa rozhodli spustiť hru, tak s veľkou pravdepodobnosťou narazíte na chybové vyskakovacie okno
+> "No hardware support for overlays, or the maximum number of visible overlays has been reached"
+
+.. alebo budete mať nejakým spôsobom problém zobraziť intro/outro videá v rámci hry.
+
+Je to spôsobené starou technikou vykresľovania DirectDraw z čias Windows XP.
+Novšie operačné systémy v kombinácii s novšími grafickými kartami bez podpory "hardware overlay" alebo ovládačov nekompatibilnými s touto starou technológiou si jednoducho nevedia s týmto problémom poradiť.
+
+Preto pomocou skriptu zmeníme štýl vykreslovania videí z:
+	
+
+> Theora → YV12 → DirectDraw overlay → display controller
+
+na:
+> Theora → YV12 → CPU YUV→RGB → existujúci OpenGL framebuffer → swap
+
+ 	
+a ako bonus aktivujeme Esc klávesu na preskočenie všetkých intro/outro videí v hre.
+
+Ako na to? Máme 2 možnosti:
+ - Stiahnutie a spustenie fixovacieho skriptu (ODPORÚČANÉ): [univerzal_video_fix.zip](https://github.com/Georgo42/LostInEU/releases/download/v1.0/univerzal_video_fix.zip)
+   - platí pre v1.0 aj v1.1 verziu
+   - obsah súborov je potrebné rozbaliť v zložke nainštalovanej hry (pravdepodobne "C:\Program Files (x86)\LostInEU") a spustiť `UNIVERZAL_VIDEO_FIX.bat`
+   - v prípade ak by ste robili update na v1.1 verziu tak je potrebné skript pustiť znova, po aplikácii skriptu môžete súbory zmazať 
+- Nahradenie `lieu.exe` súboru našim video EXE fixom podľa verzie 
+  > v1.0: [lieu_1.0_video_fix.exe](https://github.com/Georgo42/LostInEU/releases/download/v1.0/lieu_1.0_video_fix.exe)
+  
+  > v1.1: [lieu_1.1_video_fix.exe](https://github.com/Georgo42/LostInEU/releases/download/v1.0/lieu_1.1_video_fix.exe)
+  
+    - náhrada sa robí v zložke nainštalovanej hry (pravdepodobne “C:\Program Files (x86)\LostInEU”)
+    - po nahradení odporúčame premenovať znova na `lieu.exe` (aby fungovala ikonka na plocha napr.)
+
+
+Po aplikovaní všetkých krokov by sa malahra krásne načítať aj s videami...
